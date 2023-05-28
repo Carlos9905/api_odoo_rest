@@ -19,7 +19,7 @@ class SaleOrderAPI(http.Controller):
         }
         #Lista de precios
         if "listaPrecio" in kw["sale"]:
-            vals["price_list_id"] = http.request.env["product.pricelist"].sudo().search([("name", "=", kw["sale"]["listaPrecio"])]).id
+            vals["pricelist_id"] = http.request.env["product.pricelist"].sudo().search([("name", "=", kw["sale"]["listaPrecio"])]).id
         #SIM
         if "codSim" in kw["sale"]:
             vals["x_SIM"] = kw["sale"]["codSim"]
