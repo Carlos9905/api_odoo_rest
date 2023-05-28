@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <template id="view_docs_template">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
+      <div class="container">
+        <h1 class="mt-4">API de Órdenes de Venta de Odoo</h1>
+        <p class="lead">La API proporciona un punto de enlace para interactuar con las órdenes de venta en Odoo.</p>
+
+        <div class="mt-4">
+          <h2>Autenticación</h2>
+          <p>Para utilizar la API, primero debes autenticarte llamando al endpoint <code>/web/session/authenticate</code> mediante una solicitud HTTP POST.</p>
+          <p>Los campos requeridos para la autenticación son:</p>
+          <ul>
+            <li>
+              <strong>jsonrpc</strong>: Versión de la API JSON-RPC. En este caso, "2.0".</li>
+            <li>
+              <strong>params</strong>: Objeto que contiene los parámetros de autenticación.</li>
+            <ul>
+              <li>
+                <strong>db</strong>: El nombre de la base de datos en Odoo.</li>
+              <li>
+                <strong>login</strong>: El nombre de usuario o correo electrónico del usuario.</li>
+              <li>
+                <strong>password</strong>: La contraseña del usuario.</li>
+            </ul>
+          </ul>
+          <h3>Ejemplo de solicitud de autenticación usando Python con la librería <strong>requests</strong>
+          </h3>
+          <div class="bg-light p-3">
+
+            <pre>
+import requests
+
+url = "http://localhost:8069/web/session/authenticate"
+
+headers = {
+    'Content-Type': 'application/json',
+}
+
+body = {
+    "jsonrpc": "2.0",
+    "params": {
+        "db": "nombre_de_la_base_de_datos",
+        "login": "nombre@usuario.com",
+        "password": "contraseña"
+    }
+}
+
+response = requests.post(url=url, json=body, headers=headers)
+res = response.json()
+print(res)
+            </pre>
+          </div>
+          <h4>Ejemplo de respuesta si la autenticación es exitosa:</h4>
+          <div class="bg-light p-3">
+            <pre>
+{
+  "jsonrpc": "2.0",
+  "id": null,
+  "result": {
+    "uid": 2,
+    "is_system": true,
+    "is_admin": true,
+    "user_context": {
+      "lang": "es_MX",
+      "tz": "America/Managua",
+      "uid": 2
+    },
+    "db": "nombre_de_la_base_de_datos",
+    "server_version": "15.0",
+    "server_version_info": [
+      15,
+      0,
+      0,
+      "final",
+      0,
+      ""
+    ],
+    "support_url": "https://www.odoo.com/buy",
+    "name": "Administrator",
+    "username": "nombre@usuario.com",
+    "partner_display_name": "Administrator",
+    "company_id": 1,
+    "partner_id": 3,
+    "web.base.url": "http://localhost:8077",
+    "active_ids_limit": 20000,
+    "profile_session": null,
+    "profile_collectors": null,
+    "profile_params": null,
+    "max_file_upload_size": 134217728,
+    "home_action_id": false,
+    "cache_hashes": {
+      "translations": "56d033b3466d1d36013c2d513106d8eb801d0c48",
+      "load_menus": "52bfeeffc6af7440db9d365fc16b7f4020393d88faa9fb72cc6eb22edf8b0ea5",
+      "qweb": "543e1d9eacfe13a523b5ceace8faf61e1f254850404a74070d125eed0f9e4f1e",
+      "assets_discuss_public": "ee25a9646e3592edb4f9a5417e7d532e2d9f88f7a034324e7c7c4d8e7564cf03"
+    },
+    "currencies": {
+      "33": {
+        "symbol": "$",
+        "position": "before",
+        "digits": [
+          69,
+          2
+        ]
+      }
+    },
+    "user_companies": {
+      "current_company": 1,
+      "allowed_companies": {
+        "1": {
+          "id": 1,
+          "name": "My Company",
+          "sequence": 0
+        }
+      }
+    },
+    "show_effect": "True",
+    "display_switch_company_menu": false,
+    "user_id": [
+      2
+    ],
+    "web_tours": [],
+    "tour_disable": false,
+    "notification_type": "email",
+    "odoobot_initialized": true,
+    "iap_company_enrich": false
+  }
+}
+            </pre>
+          </div>
+          <h4>Ejemplo de respuesta si la autenticación falla:</h4>
+          <div class="bg-light p-3">
+            <pre>
+{
+  "jsonrpc": "2.0",
+  "id": null,
+  "error": {
+    "code": 200,
+    "message": "Odoo Server Error",
+    "data": {
+      "name": "odoo.exceptions.AccessDenied",
+      "debug": "Traceback (most recent call last):\n  
+      File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 1500, in _dispatch_nodb\n    
+      result = request.dispatch()\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 687, in dispatch\n    
+      result = self._call_function(**self.params)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 360, in _call_function\n    
+      return self.endpoint(*args, **kwargs)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 916, in __call__\n    
+      return self.method(*args, **kw)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 535, in response_wrap\n    
+      response = f(*args, **kw)\n  File \"/home/carlos/odoo-community/odoo/addons/web/controllers/main.py\", line 1207, in authenticate\n    
+      request.session.authenticate(db, login, password)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 1029, in authenticate\n    
+      uid = odoo.registry(db)['res.users'].authenticate(db, login, password, env)\n  
+      File \"/home/carlos/odoo-community/odoo/addons/website/models/res_users.py\", line 70, in authenticate\n    
+      uid = super(ResUsers, cls).authenticate(db, login, password, user_agent_env)\n  
+      File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 724, in authenticate\n    
+      uid = cls._login(db, login, password, user_agent_env=user_agent_env)\n  
+      File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 699, in _login\n   
+       user._check_credentials(password, user_agent_env)\n  
+       File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 1649, in _check_credentials\n    
+       return super()._check_credentials(password, user_agent_env)\n  
+       File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 395, in _check_credentials\n    
+       raise AccessDenied()\nException\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  
+       File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 643, in _handle_exception\n    
+       return super(JsonRequest, self)._handle_exception(exception)\n  
+       File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 301, in _handle_exception\n    
+       raise exception.with_traceback(None) from new_cause\nodoo.exceptions.AccessDenied: Access Denied\n",
+      "message": "Access Denied",
+      "arguments": [
+        "Access Denied"
+      ],
+      "context": {}
+    }
+  }
+}
+            </pre>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h2>Crear una Cotización</h2>
+          <p>El endpoint para crear una cotización es: <code>/api/v1/sale_order/</code> mediante una solicitud HTTP POST.</p>
+          <p>Los campos requeridos para crear una cotización son:</p>
+          <ul>
+            <li>
+              <strong>partner_name</strong>: El nombre del cliente asociado a la cotización.</li>
+            <li>
+              <strong>date_order</strong>: La fecha de la cotización en formato "YYYY-MM-DD".</li>
+            <li>
+              <strong>validity_date</strong>: La fecha de validez de la cotización en formato "YYYY-MM-DD".</li>
+            <li>
+              <strong>payment_term</strong>: El plazo de pago de la cotización.</li>
+            <li>
+              <strong>listaPrecio</strong>: Lista de precio eligido para la cotización.</li>
+            <li>
+              <strong>codSim</strong>: El código SIM.</li>
+            <li>
+              <strong>nombreAlmacen</strong>: El nombre del almacén.</li>
+            <li>
+              <strong>nombreEmpleado</strong>: El nombre del empleado.</li>
+            <li>
+              <strong>solicita</strong>: El nombre de la persona que solicita.</li>
+            <li>
+              <strong>hr_cliente</strong>: El nombre del cliente en recursos humanos.</li>
+            <li>
+              <strong>tipoServicio</strong>: El tipo de servicio.</li>
+            <li>
+              <strong>tipoCarga</strong>: El tipo de carga.</li>
+            <li>
+              <strong>tag_names</strong>: Las etiquetas asociadas.</li>
+            <li>
+              <strong>unidadNegocio</strong>: Unidad del negocio.</li>
+            <li>
+              <strong>numeroUnidad</strong>: Número al que pertenece la unidad.</li>
+            <li>
+              <strong>order_line</strong>: Una lista de objetos que representan las líneas de la cotización.</li>
+          </ul>
+          <p>Cada objeto de la lista <strong>order_line</strong> debe contener los siguientes campos:</p>
+          <ul>
+            <li>
+              <strong>product</strong>: El nombre o código del producto.</li>
+            <li>
+              <strong>product_uom_qty</strong>: La cantidad de productos.</li>
+            <li>
+              <strong>tax</strong> (opcional): Una lista de nombres de impuestos asociados al producto.</li>
+            <li>
+              <strong>price_unit</strong>: El precio unitario del producto.</li>
+          </ul>
+          <h3>Ejemplo de solicitud para crear una Orden de Venta usando Python con la librería <strong>requests</strong>
+          </h3>
+          <div class="bg-light p-3">
+            <pre>
+import requests
+
+url = "http://localhost:8069/api/v1/cotizaciones/"
+
+headers = {
+    'Content-Type': 'application/json',
+}
+
+body = {
+    "params": {
+        "sale": {
+            "partner_name": "Cliente de prueba",
+            "date_order": "2023-05-27",
+            "validity_date": "2023-06-27",
+            "listaPrecio":"Tarifa pública (MXN)"
+            "payment_term": "Pago inmediato",
+            "codSim":"14422",
+            "nombreAlmacen":"Tampico",
+            "nombreEmpleado":"Nombre del Empleado",
+            "solicita":"Nombre de la persona que solicita",
+            "hr_cliente":"Nombre de cliente",
+            "tipoServicio":"Tipo de servicio",
+            "tipoCarga":"Tipo de carga",
+            "unidadNegocio": "OMNIBUS VALLENSES S.A. DE C.V.",
+            "numeroUnidad": "905",
+            "tag_names":"Etiquetas"
+        },
+        "order_line": [
+            {
+                "product": "Producto 1",
+                "product_uom_qty": 2,
+                "tax": ["IVA(16%) VENTAS"],
+                "price_unit": 15
+            },
+            {
+                "product": "Producto 2",
+                "product_uom_qty": 2,
+                "price_unit": 55
+            },
+            {
+                "product": "Producto 3",
+                "tax": ["IVA(16%) VENTAS"],
+                "product_uom_qty": 2,
+                "price_unit": 25
+            }
+        ]
+    }
+}
+
+response = requests.post(url=url, json=body, headers=headers)
+res = response.json()
+print(res)
+            </pre>
+          </div>
+          <h4>Ejemplo de respuesta:</h4>
+          <div class="bg-light p-3">
+            <pre>
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": [
+        {
+            "id": 2,
+            "name": "S00001",
+            "date_order": "2023-05-27 00:00:00",
+            "validity_date": "2023-06-27",
+            "state": "draft"
+        },
+        200
+    ]
+}
+            </pre>
+          </div>
+        </div>
+      </div>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </template>
+  </data>
+</odoo>
