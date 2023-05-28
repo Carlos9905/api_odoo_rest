@@ -43,7 +43,12 @@ class SaleOrderAPI(http.Controller):
             vals["x_carga_type"] = http.request.env["carga.type"].sudo().search([("name", "=", kw["sale"]["tipoCarga"])]).id
         #Etiquetas
         if "tag_names" in kw["sale"]:
-            vals["tag_ids"] = http.request.env["crm.tag"].sudo().search([("name", "=", kw["sale"]["tag_names"])]).id
+            tags_ids = []
+            for tag_name in kw["sale"]["tag_names"]:
+                tag = http.request.env["crm.tag"].sudo().search([("name", "=", tag_name)])
+                if tag:
+                    tags_ids.append(tag.id)                
+            vals["tag_ids"] = [(6, 0, tags_ids)]
         #Unidad de negocio
         if "unidadNegocio" in kw["sale"]:
             vals["fleet_uNegocio"] = http.request.env["res.negocio"].sudo().search([("name", "=", kw["sale"]["unidadNegocio"])]).id
