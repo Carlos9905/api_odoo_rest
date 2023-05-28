@@ -37,10 +37,10 @@ class SaleOrderAPI(http.Controller):
             vals["hr_partner_id"] = http.request.env["hr.employee"].sudo().search([("name", "=", kw["sale"]["hr_cliente"])]).id
         #Tipo de servicio
         if "tipoServicio" in kw["sale"]:
-            vals["x_service_type"] = kw["sale"]["tipoServicio"]
+            vals["x_service_type"] = http.request.env["service.type"].sudo().search([("name", "=", kw["sale"]["tipoServicio"])]).id
         #Tipo de carga
         if "tipoCarga" in kw["sale"]:
-            vals["x_carga_type"] = kw["sale"]["tipoCarga"]
+            vals["x_carga_type"] = http.request.env["carga.type"].sudo().search([("name", "=", kw["sale"]["tipoCarga"])]).id
         #Etiquetas
         if "tag_names" in kw["sale"]:
             vals["tag_ids"] = http.request.env["crm.tag"].sudo().search([("name", "=", kw["sale"]["tag_names"])]).id
