@@ -10,12 +10,13 @@ class SaleOrderAPI(http.Controller):
     @http.route('/api/v1/sale_order', type="json", auth="user",methods=["POST"],csrf=False)
     def create_sale_order(self, **kw):
         #Datos de cabecera
-        if "partner_name" in kw["sale"] and "date_order" in kw["sale"] and "listaPrecio" in kw["sale"]:# and "nombreAlmacen" in kw["sale"]
+        #if "partner_name" in kw["sale"] and "date_order" in kw["sale"] and "listaPrecio" in kw["sale"]:# and "nombreAlmacen" in kw["sale"]
+        if "partner_name" in kw["sale"] and "listaPrecio" in kw["sale"]:# and "nombreAlmacen" in kw["sale"]
             partner_id = http.request.env["res.partner"].sudo().search([("name", "=", kw["sale"]["partner_name"])])
             payment_term_id = http.request.env["account.payment.term"].sudo().search([("name", "=", kw["sale"]["payment_term"])])
             vals = {
                 "partner_id": partner_id.id,
-                "date_order": kw["sale"]["date_order"],
+                #"date_order": kw["sale"]["date_order"],
                 "validity_date":  kw["sale"]["validity_date"],
                 "payment_term_id": payment_term_id.id,
             }
@@ -44,19 +45,26 @@ class SaleOrderAPI(http.Controller):
                 else:
                     return {"error": "Empleado no encontrado"}, 404
             #Solicita
-            if "solicita" in kw["sale"]:
-                solicita_id = http.request.env["hr.employee"].sudo().search([("name", "=", kw["sale"]["solicita"])])
+            if "Solicita" in kw["sale"]:
+                solicita_id = http.request.env["hr.employee"].sudo().search([("name", "=", kw["sale"]["Solicita"])])
                 if solicita_id:
-                    vals["solicita"] = solicita_id.id
+                    vals["hr_coach_id"] = solicita_id.id
                 else:
                     return {"error": "Solicita no encontrado"}, 404
-            #Cliente
+            """#Cliente
             if "hr_cliente" in kw["sale"]:
                 cliente_id = http.request.env["res.partner"].sudo().search([("name", "=", kw["sale"]["hr_cliente"])])
                 if cliente_id:
                     vals["cliente_id"] = cliente_id.id
                 else:
-                    return {"error": "Cliente no encontrado"}, 404
+                    return {"error": "Cliente no encontrado"}, 404"""
+            #Autoriza
+            if "Autoriza" in kw["sale"]:
+                autoriza=http.request.env["hr.employee"].sudo().search([("name","=",kw["sale"]["Autoriza"])])
+                if autoriza:
+                    vals["hr_partner_id"]=autoriza.id
+                else:
+                    return {"error":"Empleado que autoriza no encontrado"},404
             #Tipo de servicio
             if "tipoServicio" in kw["sale"]:
                 service_type = http.request.env["service.type"].sudo().search([("name", "=", kw["sale"]["tipoServicio"])])
@@ -83,16 +91,18 @@ class SaleOrderAPI(http.Controller):
                 vals["tag_ids"] = [(6, 0, tags_ids)]
             #Unidad de negocio
             if "unidadNegocio" in kw["sale"]:
-                unidadNegocio = http.request.env["fleet.uNegocio"].sudo().search([("name", "=", kw["sale"]["unidadNegocio"])])
+                #unidadNegocio = http.request.env["fleet.uNegocio"].sudo().search([("name", "=", kw["sale"]["unidadNegocio"])])
+                unidadNegocio = http.request.env["res.negocio"].sudo().search([("name", "=", kw["sale"]["unidadNegocio"])])
                 if unidadNegocio:
                     vals["fleet_uNegocio"] = unidadNegocio.id
                 else:
                     return {"error": "Unidad de negocio no encontrado"}, 404
             #Numero de unidad
             if "numeroUnidad" in kw["sale"]:
-                numeroUnidad = http.request.env["fleet.uNegocio"].sudo().search([("name", "=", kw["sale"]["numeroUnidad"])])
+                #numeroUnidad = http.request.env["fleet.uNegocio_id"].sudo().search([("name", "=", kw["sale"]["numeroUnidad"])])
+                numeroUnidad = http.request.env["fleet.vehicle"].sudo().search([("name", "=", kw["sale"]["numeroUnidad"])])
                 if numeroUnidad:
-                    vals["fleet_uNegocio"] = numeroUnidad.id
+                    vals["fleet_uNegocio_id"] = numeroUnidad.id
                 else:
                     return {"error": "Numero de unidad no encontrado"}, 404
             
@@ -125,7 +135,7 @@ class SaleOrderAPI(http.Controller):
             return {
                 "id": sale.id,
                 "name": sale.name,
-                "date_order": sale.date_order,
+                #"date_order": sale.date_order,
                 "validity_date": sale.validity_date,
                 "state": sale.state
             }, 200
