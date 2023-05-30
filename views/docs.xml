@@ -32,7 +32,7 @@
             <pre>
 import requests
 
-url = "http://localhost:8069/web/session/authenticate"
+url = "http://10.1.11.178:8069/web/session/authenticate"
 
 headers = {
     'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ print(res)
     "is_admin": true,
     "user_context": {
       "lang": "es_MX",
-      "tz": "America/Managua",
+      "tz": "America/Mexico_city",
       "uid": 2
     },
     "db": "nombre_de_la_base_de_datos",
@@ -83,7 +83,7 @@ print(res)
     "partner_display_name": "Administrator",
     "company_id": 1,
     "partner_id": 3,
-    "web.base.url": "http://localhost:8077",
+    "web.base.url": "http://10.1.11.178:8069",
     "active_ids_limit": 20000,
     "profile_session": null,
     "profile_collectors": null,
@@ -142,27 +142,27 @@ print(res)
     "data": {
       "name": "odoo.exceptions.AccessDenied",
       "debug": "Traceback (most recent call last):\n  
-      File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 1500, in _dispatch_nodb\n    
-      result = request.dispatch()\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 687, in dispatch\n    
-      result = self._call_function(**self.params)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 360, in _call_function\n    
-      return self.endpoint(*args, **kwargs)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 916, in __call__\n    
-      return self.method(*args, **kw)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 535, in response_wrap\n    
-      response = f(*args, **kw)\n  File \"/home/carlos/odoo-community/odoo/addons/web/controllers/main.py\", line 1207, in authenticate\n    
-      request.session.authenticate(db, login, password)\n  File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 1029, in authenticate\n    
+      File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 1500, in _dispatch_nodb\n    
+      result = request.dispatch()\n  File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 687, in dispatch\n    
+      result = self._call_function(**self.params)\n  File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 360, in _call_function\n    
+      return self.endpoint(*args, **kwargs)\n  File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 916, in __call__\n    
+      return self.method(*args, **kw)\n  File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 535, in response_wrap\n    
+      response = f(*args, **kw)\n  File \"/home/Almacen/odoo-community/odoo/addons/web/controllers/main.py\", line 1207, in authenticate\n    
+      request.session.authenticate(db, login, password)\n  File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 1029, in authenticate\n    
       uid = odoo.registry(db)['res.users'].authenticate(db, login, password, env)\n  
-      File \"/home/carlos/odoo-community/odoo/addons/website/models/res_users.py\", line 70, in authenticate\n    
+      File \"/home/Almacen/odoo-community/odoo/addons/website/models/res_users.py\", line 70, in authenticate\n    
       uid = super(ResUsers, cls).authenticate(db, login, password, user_agent_env)\n  
-      File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 724, in authenticate\n    
+      File \"//home/Almacen/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 724, in authenticate\n    
       uid = cls._login(db, login, password, user_agent_env=user_agent_env)\n  
-      File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 699, in _login\n   
+      File \"//home/Almacen/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 699, in _login\n   
        user._check_credentials(password, user_agent_env)\n  
-       File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 1649, in _check_credentials\n    
+       File \"//home/Almacen/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 1649, in _check_credentials\n    
        return super()._check_credentials(password, user_agent_env)\n  
-       File \"//home/carlos/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 395, in _check_credentials\n    
+       File \"//home/Almacen/odoo-community/odoo/odoo/addons/base/models/res_users.py\", line 395, in _check_credentials\n    
        raise AccessDenied()\nException\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  
-       File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 643, in _handle_exception\n    
+       File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 643, in _handle_exception\n    
        return super(JsonRequest, self)._handle_exception(exception)\n  
-       File \"//home/carlos/odoo-community/odoo/odoo/http.py\", line 301, in _handle_exception\n    
+       File \"//home/Almacen/odoo-community/odoo/odoo/http.py\", line 301, in _handle_exception\n    
        raise exception.with_traceback(None) from new_cause\nodoo.exceptions.AccessDenied: Access Denied\n",
       "message": "Access Denied",
       "arguments": [
@@ -182,35 +182,35 @@ print(res)
           <p>Los campos requeridos para crear una cotización son:</p>
           <ul>
             <li>
-              <strong>partner_name</strong>: El nombre del cliente asociado a la cotización.</li>
+              <strong>partner_name</strong>: El nombre del cliente asociado a la cotización.<strong style="color:blue">String</strong></li>
+            <!--<li>
+              <strong>date_order</strong>: La fecha de la cotización en formato "YYYY-MM-DD".</li>-->
             <li>
-              <strong>date_order</strong>: La fecha de la cotización en formato "YYYY-MM-DD".</li>
+              <strong>validity_date</strong>:Período de tiempo durante el cual una oferta de venta es válida para su aceptación."YYYY-MM-DD".<strong style="color:blue">Date</strong></li>
             <li>
-              <strong>validity_date</strong>: La fecha de validez de la cotización en formato "YYYY-MM-DD".</li>
+              <strong>payment_term</strong>: El plazo de pago de la cotización.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>payment_term</strong>: El plazo de pago de la cotización.</li>
+              <strong>listaPrecio</strong>: Lista de precio eligido para la cotización.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>listaPrecio</strong>: Lista de precio eligido para la cotización.</li>
+              <strong>codSim</strong>: Código SIM <strong style="color:blue">String</strong></li>
             <li>
-              <strong>codSim</strong>: El código SIM.</li>
+              <strong>nombreAlmacen</strong>: El nombre del almacén.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>nombreAlmacen</strong>: El nombre del almacén.</li>
+              <strong>nombreEmpleado</strong>: El nombre del empleado.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>nombreEmpleado</strong>: El nombre del empleado.</li>
+              <strong>solicita</strong>: El nombre de la persona que solicita.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>solicita</strong>: El nombre de la persona que solicita.</li>
+              <strong>hr_cliente</strong>: El nombre del cliente en recursos humanos.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>hr_cliente</strong>: El nombre del cliente en recursos humanos.</li>
+              <strong>tipoServicio</strong>: El tipo de servicio.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>tipoServicio</strong>: El tipo de servicio.</li>
+              <strong>tipoCarga</strong>: El tipo de carga.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>tipoCarga</strong>: El tipo de carga.</li>
+              <strong>tag_names</strong>: Las etiquetas asociadas.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>tag_names</strong>: Las etiquetas asociadas.</li>
+              <strong>unidadNegocio</strong>: Unidad del negocio.<strong style="color:blue">String</strong></li>
             <li>
-              <strong>unidadNegocio</strong>: Unidad del negocio.</li>
-            <li>
-              <strong>numeroUnidad</strong>: Número al que pertenece la unidad.</li>
+              <strong>numeroUnidad</strong>: Número al que pertenece la unidad.<strong style="color:blue">String</strong></li>
             <li>
               <strong>order_line</strong>: Una lista de objetos que representan las líneas de la cotización.</li>
           </ul>
@@ -231,7 +231,7 @@ print(res)
             <pre>
 import requests
 
-url = "http://localhost:8069/api/v1/cotizaciones/"
+url = "http://10.1.11.178:8069/api/v1/cotizaciones/"
 
 headers = {
     'Content-Type': 'application/json',
@@ -240,7 +240,7 @@ headers = {
 body = {
     "params": {
         "sale": {
-            "partner_name": "Cliente de prueba",
+            "partner_name": "SALIDAS ALMACEN TAMPICO",
             "date_order": "2023-05-27",
             "validity_date": "2023-06-27",
             "listaPrecio":"Tarifa pública (MXN)"
@@ -293,7 +293,6 @@ print(res)
         {
             "id": 2,
             "name": "S00001",
-            "date_order": "2023-05-27 00:00:00",
             "validity_date": "2023-06-27",
             "state": "draft"
         },
