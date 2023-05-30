@@ -2,7 +2,7 @@
 <odoo>
   <data>
     <template id="view_docs_template">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
       <div class="container">
         <h1 class="mt-4">API de Órdenes de Venta de Odoo</h1>
         <p class="lead">La API proporciona un punto de enlace para interactuar con las órdenes de venta en Odoo.</p>
@@ -11,20 +11,58 @@
           <h2>Autenticación</h2>
           <p>Para utilizar la API, primero debes autenticarte llamando al endpoint <code>/web/session/authenticate</code> mediante una solicitud HTTP POST.</p>
           <p>Los campos requeridos para la autenticación son:</p>
-          <ul>
-            <li>
-              <strong>jsonrpc</strong>: Versión de la API JSON-RPC. En este caso, "2.0".</li>
-            <li>
-              <strong>params</strong>: Objeto que contiene los parámetros de autenticación.</li>
-            <ul>
-              <li>
-                <strong>db</strong>: El nombre de la base de datos en Odoo.</li>
-              <li>
-                <strong>login</strong>: El nombre de usuario o correo electrónico del usuario.</li>
-              <li>
-                <strong>password</strong>: La contraseña del usuario.</li>
-            </ul>
-          </ul>
+          <table class="table table-bordered">
+            <tr>
+              <th>Nombre del Campo</th>
+              <th>Descripción</th>
+              <th>Tipo de dato</th>
+            </tr>
+            <tr>
+              <td>
+                <strong>jsonrpc</strong>
+              </td>
+              <td>Versión de la API JSON-RPC. En este caso, "2.0".</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>params</strong>
+              </td>
+              <td>Objeto que contiene los parámetros de autenticación.</td>
+              <td>
+                <strong>Objeto</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>db</strong>
+              </td>
+              <td>El nombre de la base de datos en Odoo.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>login</strong>
+              </td>
+              <td>El nombre de usuario o correo electrónico del usuario.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>password</strong>
+              </td>
+              <td>La contraseña del usuario.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+          </table>
           <h3>Ejemplo de solicitud de autenticación usando Python con la librería <strong>requests</strong>
           </h3>
           <div class="bg-light p-3">
@@ -180,51 +218,170 @@ print(res)
           <h2>Crear una Cotización</h2>
           <p>El endpoint para crear una cotización es: <code>/api/v1/sale_order/</code> mediante una solicitud HTTP POST.</p>
           <p>Los campos requeridos para crear una cotización son:</p>
-          <ul>
-            <li>
-              <strong>partner_name</strong>: El nombre del cliente asociado a la cotización.<strong style="color:blue">String</strong></li>
-            <!--<li>
-              <strong>date_order</strong>: La fecha de la cotización en formato "YYYY-MM-DD".</li>-->
-            <li>
-              <strong>validity_date</strong>:Período de tiempo durante el cual una oferta de venta es válida para su aceptación."YYYY-MM-DD".<strong style="color:blue">Date</strong></li>
-            <li>
-              <strong>payment_term</strong>: El plazo de pago de la cotización.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>listaPrecio</strong>: Lista de precio eligido para la cotización.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>codSim</strong>: Código SIM <strong style="color:blue">String</strong></li>
-            <li>
-              <strong>nombreAlmacen</strong>: El nombre del almacén.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>nombreEmpleado</strong>: El nombre del empleado.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>solicita</strong>: El nombre de la persona que solicita.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>hr_cliente</strong>: El nombre del cliente en recursos humanos.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>tipoServicio</strong>: El tipo de servicio.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>tipoCarga</strong>: El tipo de carga.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>tag_names</strong>: Las etiquetas asociadas.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>unidadNegocio</strong>: Unidad del negocio.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>numeroUnidad</strong>: Número al que pertenece la unidad.<strong style="color:blue">String</strong></li>
-            <li>
-              <strong>order_line</strong>: Una lista de objetos que representan las líneas de la cotización.</li>
-          </ul>
+          <table class="table table-bordered">
+            <tr>
+              <th>Nombre del Campo</th>
+              <th>Descripción</th>
+              <th>Tipo de Dato</th>
+            </tr>
+            <tr>
+              <td>
+                <strong>params</strong>
+              </td>
+              <td>Los parametros.</td>
+              <td>Objeto</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>partner_name</strong>
+              </td>
+              <td>El nombre del cliente asociado a la cotización.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>validity_date</strong>
+              </td>
+              <td>Período de tiempo durante el cual una oferta de venta es válida para su aceptación.</td>
+              <td>Date</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>payment_term</strong>
+              </td>
+              <td>El plazo de pago de la cotización.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>listaPrecio</strong>
+              </td>
+              <td>Lista de precio eligido para la cotización.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>codSim</strong>
+              </td>
+              <td>Código SIM</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>nombreAlmacen</strong>
+              </td>
+              <td>El nombre del almacén.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>nombreEmpleado</strong>
+              </td>
+              <td>El nombre del empleado.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>solicita</strong>
+              </td>
+              <td>El nombre de la persona que solicita.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>hr_cliente</strong>
+              </td>
+              <td>El nombre del cliente en recursos humanos.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>tipoServicio</strong>
+              </td>
+              <td>El tipo de servicio.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>tipoCarga</strong>
+              </td>
+              <td>El tipo de carga.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>tag_names</strong>
+              </td>
+              <td>Las etiquetas asociadas.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>unidadNegocio</strong>
+              </td>
+              <td>Unidad del negocio.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>numeroUnidad</strong>
+              </td>
+              <td>Número al que pertenece la unidad.</td>
+              <td>String</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>order_line</strong>
+              </td>
+              <td>Una lista de objetos que representan las líneas de la cotización.</td>
+              <td></td>
+            </tr>
+          </table>
+
           <p>Cada objeto de la lista <strong>order_line</strong> debe contener los siguientes campos:</p>
-          <ul>
-            <li>
-              <strong>product</strong>: El nombre o código del producto.</li>
-            <li>
-              <strong>product_uom_qty</strong>: La cantidad de productos.</li>
-            <li>
-              <strong>tax</strong> (opcional): Una lista de nombres de impuestos asociados al producto.</li>
-            <li>
-              <strong>price_unit</strong>: El precio unitario del producto.</li>
-          </ul>
+          <table class="table table-bordered">
+            <tr>
+              <th>Nombre del Campo</th>
+              <th>Descripción</th>
+              <th>Tipo de dato</th>
+            </tr>
+            <tr>
+              <td>
+                <strong>product</strong>
+              </td>
+              <td>El nombre o código del producto.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>product_uom_qty</strong>
+              </td>
+              <td>La cantidad de productos.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>tax</strong> (opcional)</td>
+              <td>Una lista de nombres de impuestos asociados al producto.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>price_unit</strong>
+              </td>
+              <td>El precio unitario del producto.</td>
+              <td>
+                <strong>String</strong>
+              </td>
+            </tr>
+          </table>
+
           <h3>Ejemplo de solicitud para crear una Orden de Venta usando Python con la librería <strong>requests</strong>
           </h3>
           <div class="bg-light p-3">
@@ -303,7 +460,7 @@ print(res)
           </div>
         </div>
       </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </template>
   </data>
 </odoo>

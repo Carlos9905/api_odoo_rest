@@ -5,13 +5,13 @@ class SaleOrderAPI(http.Controller):
     #Documenation
     @http.route('/api/v1/docs', auth='public', website=False)
     def docs(self):
-        return http.request.render('api_odoo_rest.view_docs_template')
+        return http.request.render('sale_order_api_rest.view_docs_template')
 
     @http.route('/api/v1/sale_order', type="json", auth="user",methods=["POST"],csrf=False)
     def create_sale_order(self, **kw):
         #Datos de cabecera
         #if "partner_name" in kw["sale"] and "date_order" in kw["sale"] and "listaPrecio" in kw["sale"]:# and "nombreAlmacen" in kw["sale"]
-        if "partner_name" in kw["sale"] and "listaPrecio" in kw["sale"]:# and "nombreAlmacen" in kw["sale"]
+        if "partner_name" in kw["sale"] and "listaPrecio" in kw["sale"] and "nombreAlmacen" in kw["sale"]:
             partner_id = http.request.env["res.partner"].sudo().search([("name", "=", kw["sale"]["partner_name"])])
             payment_term_id = http.request.env["account.payment.term"].sudo().search([("name", "=", kw["sale"]["payment_term"])])
             vals = {
